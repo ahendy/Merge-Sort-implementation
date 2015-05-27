@@ -18,21 +18,16 @@ def main():
     for f in txtfiles:
         javacmd = "java -Xss64m MergeSort "+ f + " -1"
         try:    
-           # response = os.system(javacmd)
             response = subprocess.Popen(javacmd, stdout=subprocess.PIPE,shell = True)
-            response = response.stdout.read()
-            print(response)
-            for lines in response:
-                if "\r\nList is sorted." not in lines:
-                    print("Output correctly sorted for file: " + f)
-                else:
-                    print("Output did not return a sorted list for file: " + f)
+            response = response.stdout.read().decode("utf-8")
+            
+            
+            if "is sorted."  in response:
+                print("Output correctly sorted for file: " + f)
+            else:
 
-            #if (response>0):
-                
-              # print('error on test file "' + f+'" from running your code')
-            #lse:
-               # print("success")
+                print("Output did not return a sorted list for file: " + f)
+
         except:
             print('error')
 
